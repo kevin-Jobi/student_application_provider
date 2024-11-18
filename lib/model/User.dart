@@ -1,25 +1,28 @@
-class   User
-{
- User(); 
- 
-  int? id;
-  String? name;
-  String? contact;
-  String? description;
-  String? image;
-  String? bloodgroup;
-  
+class StudentModel {
+  final int? id;
+  final String name;
+  final String contact;
+  final String description;
+  final String image;
+  final String bloodgroup;
+  StudentModel(
+      {required this.name,
+      required this.contact,
+      required this.description,
+      required this.image,
+      required this.bloodgroup,
+      this.id
+      });
 
-  userMap(){
-    var mapping=Map<String,dynamic>();
-    
-    mapping['id']=id??null;
-    mapping['name']=name!;
-     mapping['contact']=contact!;
-      mapping['description']=description!;
-      mapping['image']=image!;
-      mapping['bloodgroup']=bloodgroup!;
-      
-      return mapping;
+  factory StudentModel.fromMap(Map<String,dynamic>map){
+    return StudentModel(
+      id : map['id'],
+      name : map['name'],
+      contact : map['contact'],
+      description :map['description'],
+      image :map['image'],
+      bloodgroup :map['bloodgroup']
+    );
   }
+
 }

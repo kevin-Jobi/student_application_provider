@@ -5,7 +5,7 @@ import 'package:student_application/model/User.dart';
 
 
 class ViewStudent extends StatefulWidget {
-  final User user   ;
+  final StudentModel user   ;
   const ViewStudent({super.key,required this.user});
 
   @override
