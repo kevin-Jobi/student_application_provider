@@ -218,8 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _filterStudents(String query){
     final provider = Provider.of<StudentProvider>(context,listen: false);
     provider.setSearchQuery(query);
-     
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +282,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       leading: CircleAvatar(
                         backgroundImage: FileImage(
                           // File(filteredStudentList[index].image),
-                          File(_studentList[index].image),
+                          // File(_studentList[index].image), // this is also applicable
+                          File(student.image),
                         ),
                       ),
                       title: Text(_studentList[index].name),

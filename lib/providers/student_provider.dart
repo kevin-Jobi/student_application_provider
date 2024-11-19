@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:student_application/db_helper/student_db.dart';
 import 'package:student_application/model/User.dart';
 
@@ -8,6 +10,7 @@ class StudentProvider extends ChangeNotifier {
   final StudentDbHelper studentDb = StudentDbHelper();
   List<StudentModel> students = [];
   List<StudentModel> allStudents = [];
+    File? selectedImage;
   String searchQuery = ''; // Add this line to store search query *Claude
   Future<void> addStudentProvider(StudentModel studentModel) async {
     await studentDb.addStudent(studentModel);
@@ -31,6 +34,18 @@ class StudentProvider extends ChangeNotifier {
     await studentDb.editStudentDetails(edited);
     getAllStudentsProvider();
     notifyListeners();
+  }
+
+    Future picImageFromGallery() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnImage == null) {
+      return;
+    }
+   
+      selectedImage = File(returnImage.path);
+      // Imagepath = returnImage.path.toString();
+      notifyListeners();
   }
 
 //
@@ -59,7 +74,7 @@ class StudentProvider extends ChangeNotifier {
     searchQuery = query;
 
     if (searchQuery.isNotEmpty) {
-      getAllStudentsProvider();
+     await getAllStudentsProvider();
       students = students
           .where((student) =>
               student.name.toLowerCase().contains(query.toLowerCase()) ||
@@ -67,7 +82,8 @@ class StudentProvider extends ChangeNotifier {
           .toList();
       log('students is${students.contains(query)}');
     } else {
-      await getAllStudentsProvider();
+      log('searchQuery is empty');
+      // await getAllStudentsProvider();
     }
     notifyListeners();
   }
